@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SettingCloser — курс по продажам на основе эмпатии</title>
+<meta name="description" content="SettingCloser — 10-недельный курс по продажам: эмпатия как рабочий инструмент, живые сессии и разбор реальных сделок.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --paper:#f7f5f5;
+    --ink:#18100f;
+    --ink-soft:#4a3d3c;
+    --slate:#7d6d6c;
+    --red:#c81422;
+    --red-strong:#a10f1b;
+    --line:#e6dbda;
+    --surface:#eee3e2;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0c0808;
+      --ink:#f6efee;
+      --ink-soft:#cdb9b8;
+      --slate:#8c7877;
+      --red:#ff3344;
+      --red-strong:#ff5c68;
+      --line:#2c1a1a;
+      --surface:#171010;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0c0808;
+    --ink:#f6efee;
+    --ink-soft:#cdb9b8;
+    --slate:#8c7877;
+    --red:#ff3344;
+    --red-strong:#ff5c68;
+    --line:#2c1a1a;
+    --surface:#171010;
+  }
+
+  *{box-sizing:border-box;}
+  html{background:var(--paper);}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:76px;
+  }
+  ::selection{background:var(--red);color:var(--paper);}
+
+  h1,h2,h3{
+    font-family:'Fraunces',Georgia,serif;
+    font-weight:600;
+    text-wrap:balance;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--red);
+  }
+
+  a{color:inherit;}
+  img,svg{max-width:100%;}
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 clamp(20px,5vw,56px);
+  }
+
+  /* ---------- NAV ---------- */
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:28px;
+    padding-bottom:28px;
+    gap:16px;
+  }
+  .wordmark{
+    display:inline-flex;
+    align-items:center;
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.15rem;
+    letter-spacing:-0.01em;
+  }
+  .wordmark span{color:var(--red);}
+  .logo-mark{
+    position:relative;
+    width:26px;
+    height:26px;
+    border-radius:7px;
+    margin-right:10px;
+    background:linear-gradient(140deg,#ff2d3d 0%,#6e0a12 100%);
+    box-shadow:0 0 0 1px rgba(255,255,255,0.08) inset, 0 4px 12px -4px rgba(199,20,30,0.7);
+    flex:none;
+  }
+  .logo-mark::before,
+  .logo-mark::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    background:#fff;
+    border-radius:1px;
+    transform:translate(-50%,-50%);
+  }
+  .logo-mark::before{width:13px;height:2.5px;}
+  .logo-mark::after{width:2.5px;height:13px;}
+  .nav-links{
+    display:flex;
+    gap:32px;
+    font-size:0.92rem;
+    color:var(--ink-soft);
+  }
+  .nav-links a{text-decoration:none;}
+  .nav-links a:hover{color:var(--red);}
+  .nav-cta{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.04em;
+    text-decoration:none;
+    color:var(--ink);
+    border:1px solid var(--line);
+    padding:9px 16px;
+    border-radius:2px;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{border-color:var(--red);color:var(--red);}
+  @media (max-width:720px){ .nav-links{display:none;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:clamp(28px,6vw,64px) 0 clamp(40px,7vw,72px);
+    background:
+      radial-gradient(120% 150% at 12% -10%, #6e0d14 0%, #390509 32%, #14070a 62%, #08070a 100%);
+    color:#f5ece9;
+  }
+  .hero .eyebrow{color:#ff5b64;}
+  .hero-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 22px;
+    margin-bottom:20px;
+  }
+  .hero-tags span{
+    font-size:0.86rem;
+    color:#d9c4c1;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .hero-tags span::before{
+    content:"";
+    width:5px;height:5px;border-radius:50%;
+    background:#ff4f5a;
+    flex:none;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem,4.6vw,3.5rem);
+    line-height:1.08;
+    max-width:18ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:#ff4f5a;
+  }
+  .hero-sub{
+    margin-top:22px;
+    font-size:1.08rem;
+    line-height:1.65;
+    color:#d9c4c1;
+    max-width:58ch;
+  }
+  .hero-actions{
+    margin-top:30px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+  .btn-primary{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:linear-gradient(135deg,#ff2d3d 0%,#8f0e18 100%);
+    color:#fff8f7;
+    font-weight:700;
+    font-size:0.98rem;
+    text-decoration:none;
+    padding:14px 24px;
+    border-radius:3px;
+    position:relative;
+    box-shadow:0 6px 20px -8px rgba(199,20,30,0.65);
+    transition:filter .15s ease, transform .15s ease;
+  }
+  .btn-primary:hover{filter:brightness(1.14);transform:translateY(-1px);}
+  .btn-primary .seal{
+    width:8px;height:8px;border-radius:50%;
+    background:#fff;
+    opacity:0.85;
+  }
+  .hero-note{
+    font-size:0.85rem;
+    color:#b09896;
+  }
+
+  /* stat bar */
+  .stat-bar{
+    margin-top:38px;
+    background:rgba(10,7,8,0.5);
+    border:1px solid rgba(255,110,116,0.28);
+    border-radius:4px;
+    padding:22px clamp(18px,3vw,30px);
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    backdrop-filter:blur(6px);
+  }
+  @media (max-width:760px){ .stat-bar{grid-template-columns:repeat(2,1fr);} }
+  .stat-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .stat-item svg{
+    width:20px;height:20px;
+    color:#ff5b64;
+    flex:none;
+  }
+  .stat-item .stat-label{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.66rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:#b09896;
+  }
+  .stat-item .stat-value{
+    display:block;
+    font-weight:700;
+    font-size:0.95rem;
+    color:#f5ece9;
+    margin-top:2px;
+  }
+
+  /* ---------- SECTION shell ---------- */
+  section{padding:clamp(40px,7vw,84px) 0;}
+  .section-head{
+    max-width:64ch;
+    margin-bottom:clamp(28px,4vw,44px);
+  }
+  .section-head h2{
+    font-size:clamp(1.5rem,3vw,2.15rem);
+    margin-top:12px;
+    line-height:1.2;
+  }
+  .section-head p{
+    margin-top:14px;
+    color:var(--ink-soft);
+    font-size:1rem;
+    line-height:1.6;
+  }
+  .rule{
+    height:1px;
+    background:var(--line);
+    border:none;
+    margin:0;
+  }
+
+  /* ---------- CARD GRID (pain / skills) ---------- */
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+  @media (max-width:640px){ .card-grid{grid-template-columns:1fr;} }
+  .card-item{
+    display:flex;
+    gap:14px;
+    padding:20px 22px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:3px;
+  }
+  .card-item .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--red);
+    margin-top:9px;
+    flex:none;
+  }
+  .card-item p{margin:0;font-size:0.96rem;color:var(--ink-soft);line-height:1.55;}
+  .card-item strong{color:var(--ink);font-weight:700;}
+
+  /* ---------- CURRICULUM (clauses) ---------- */
+  .clause{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:24px;
+    padding:26px 0;
+    border-top:1px solid var(--line);
+  }
+  .clause:last-child{border-bottom:1px solid var(--line);}
+  @media (max-width:640px){ .clause{grid-template-columns:56px 1fr;} }
+  .clause-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.95rem;
+    color:var(--red);
+    padding-top:4px;
+  }
+  .clause-date{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.7rem;
+    color:var(--slate);
+    margin-top:6px;
+  }
+  @media (max-width:640px){ .clause-date{display:none;} }
+  .clause h3{
+    font-size:1.15rem;
+    font-weight:600;
+  }
+  .clause ul{
+    margin:10px 0 0;
+    padding-left:1.1em;
+    color:var(--ink-soft);
+    line-height:1.6;
+    max-width:62ch;
+    font-size:0.96rem;
+  }
+  .clause li + li{margin-top:4px;}
+  .curriculum-note{
+    font-size:0.9rem;
+    color:var(--slate);
+    margin-top:16px;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-item{
+    padding:22px 0;
+    border-top:1px solid var(--line);
+  }
+  .faq-item:last-child{border-bottom:1px solid var(--line);}
+  .faq-item h3{
+    font-size:1.05rem;
+    font-weight:700;
+    font-family:'Manrope',sans-serif;
+  }
+  .faq-item p{
+    margin:8px 0 0;
+    color:var(--ink-soft);
+    font-size:0.96rem;
+    line-height:1.6;
+    max-width:64ch;
+  }
+
+  /* ---------- CTA / FORM ---------- */
+  #form{
+    background:var(--surface);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .cta-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:clamp(28px,5vw,56px);
+    align-items:center;
+  }
+  @media (max-width:820px){ .cta-grid{grid-template-columns:1fr;} }
+  .cta-grid h2{font-size:clamp(1.6rem,3.4vw,2.3rem);line-height:1.2;}
+  .cta-grid .section-head{margin-bottom:0;}
+
+  .cta-card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:28px;
+  }
+  .cta-card .eyebrow{display:block;margin-bottom:10px;}
+  .cta-card ol{
+    margin:0 0 22px;
+    padding-left:1.1em;
+    color:var(--ink-soft);
+    font-size:0.94rem;
+    line-height:1.7;
+  }
+  .cta-card .btn-primary{width:100%;justify-content:center;}
+  .cta-price{
+    margin-top:16px;
+    font-size:0.85rem;
+    color:var(--slate);
+    text-align:center;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:30px 0 40px;
+  }
+  .footer-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    font-size:0.82rem;
+    color:var(--slate);
+  }
+  .footer-row a{color:var(--slate);text-decoration:none;}
+  .footer-row a:hover{color:var(--red);}
+
+  /* ---------- STICKY CTA BAR ---------- */
+  .sticky-cta{
+    position:fixed;
+    left:0;right:0;bottom:0;
+    z-index:50;
+    background:linear-gradient(90deg,#08070a 0%,#2b0509 55%,#4c070d 100%);
+    border-top:1px solid rgba(255,110,116,0.28);
+    padding:14px clamp(16px,5vw,56px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+  }
+  .sticky-cta .label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#f5ece9;
+    font-size:0.92rem;
+    min-width:0;
+  }
+  .sticky-cta .label .logo-mark{width:20px;height:20px;margin-right:0;}
+  .sticky-cta .label .logo-mark::before{width:10px;height:2px;}
+  .sticky-cta .label .logo-mark::after{width:2px;height:10px;}
+  .sticky-cta .label span.name{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+  }
+  .sticky-cta .label span.name b{color:#ff5b64;font-weight:600;}
+  .sticky-cta .label .tagline{
+    color:#c9b6b4;
+    font-size:0.82rem;
+    display:none;
+  }
+  @media (min-width:560px){ .sticky-cta .label .tagline{display:inline;} }
+  .sticky-cta .btn-primary{
+    padding:11px 20px;
+    font-size:0.9rem;
+    white-space:nowrap;
+    flex:none;
+  }
+  @media (max-width:420px){
+    .sticky-cta .label span.name{display:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .btn-primary{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="wrap">
+  <div class="wordmark"><span class="logo-mark"></span>setting<span>closer</span></div>
+  <div class="nav-links">
+    <a href="#curriculum">Программа</a>
+    <a href="#faq">Вопросы</a>
+    <a href="#form">Записаться</a>
+  </div>
+  <a class="nav-cta" href="https://t.me/ana_semm" target="_blank" rel="noopener">Написать Анастасии</a>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-tags">
+      <span>Живые сессии с преподавателем</span>
+      <span>Интерактивный формат</span>
+      <span>Домашние задания</span>
+      <span>Доступ к сообществу</span>
+    </div>
+    <span class="eyebrow">10-недельный курс по продажам</span>
+    <h1>Клиенты выбирают не более дешёвых конкурентов. Они выбирают тех, кому <em>успели довериться</em>.</h1>
+    <p class="hero-sub">SettingCloser — курс для тех, кто продаёт напрямую и хочет вести сделку через доверие, а не через напор. Разбираем эмпатию как рабочий инструмент продавца: как слышать клиента, снимать сомнения и закрывать сделку на своих условиях.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="https://t.me/ana_semm" target="_blank" rel="noopener"><span class="seal"></span>Записаться за $1500</a>
+      <span class="hero-note">10 живых сессий по 90 минут</span>
+    </div>
+
+    <div class="stat-bar">
+      <div class="stat-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
+        <span><span class="stat-label">Формат</span><span class="stat-value">Онлайн, вживую</span></span>
+      </div>
+      <div class="stat-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L12 16.9l-5.6 3.1 1.4-6.2L3 9.5l6.4-.6z"/></svg>
+        <span><span class="stat-label">Сессии</span><span class="stat-value">10 × 90 минут</span></span>
+      </div>
+      <div class="stat-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+        <span><span class="stat-label">Время</span><span class="stat-value">19:00 по Москве</span></span>
+      </div>
+      <div class="stat-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="4.5" width="17" height="16" rx="1.5"/><path d="M3.5 9.5h17M8 3v3M16 3v3"/></svg>
+        <span><span class="stat-label">Старт</span><span class="stat-value">5 октября 2026</span></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<hr class="rule" />
+
+<section id="pain">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Цена старого подхода</span>
+      <h2>Без нужных навыков и настроя в продажах вы теряете больше, чем кажется</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card-item">
+        <span class="dot"></span>
+        <p><strong>Теряете сделки, которые должны были выиграть</strong> — клиент уходит к более слабому конкуренту, потому что не успел вам довериться.</p>
+      </div>
+      <div class="card-item">
+        <span class="dot"></span>
+        <p><strong>Не дотягиваете до плана</strong> — работаете больше и дольше, выгораете, а результат не растёт вместе с усилиями.</p>
+      </div>
+      <div class="card-item">
+        <span class="dot"></span>
+        <p><strong>Принимаете фиктивное «да»</strong> — тратите недели на договорённости, которые разваливаются на последнем шаге.</p>
+      </div>
+      <div class="card-item">
+        <span class="dot"></span>
+        <p><strong>Держитесь за старые сценарии</strong> — заученные вопросы и напор всё чаще отпугивают, а не убеждают покупателя.</p>
+      </div>
+      <div class="card-item">
+        <span class="dot"></span>
+        <p><strong>Уступаете в цене без необходимости</strong> — снижаете чек там, где сделку можно было закрыть на своих условиях.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Чему вы научитесь</span>
+      <h2>Постройте навыки, которые стоят за каждым закрытием сделки</h2>
+      <p>Курс для тех, кто продаёт напрямую и хочет, чтобы решение о покупке клиент принимал сам — без давления и без скидки.</p>
+    </div>
+    <div class="card-grid">
+      <div class="card-item">
+        <span class="dot"></span>
+        <p><strong>Понимаете реальное «почему» клиента</strong> — считываете, что стоит за словами, а не только то, что сказано вслух.</p>
+      </div>
+      <div class="card-item">
+        <span class="dot"></span>
+        <p><strong>Строите доверие быстрее</strong> — называете невысказанные опасения клиента, не споря и не давя на него.</p>
+      </div>
+      <div class="card-item">
+        <span class="dot"></span>
+        <p><strong>Защищаете свою цену</strong> — ведёте клиента к тому, чтобы он сам обосновал для себя ценность сделки.</p>
+      </div>
+      <div class="card-item">
+        <span class="dot"></span>
+        <p><strong>Превращаете привратников в союзников</strong> — секретарей и посредников, которые раньше тормозили сделку.</p>
+      </div>
+      <div class="card-item">
+        <span class="dot"></span>
+        <p><strong>Перестаёте гнаться за слабыми лидами</strong> — отличаете реальный интерес от попытки выторговать условия в другом месте.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="curriculum">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Программа курса</span>
+      <h2>10 недель на пути к профессии продавца-переговорщика</h2>
+      <p class="curriculum-note">Каждая сессия — 90 минут вживую, в 19:00 по Москве. Порядок тем может немного меняться в зависимости от вовлечённости группы.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-num">01<span class="clause-date">6 окт 2026</span></div>
+      <div>
+        <h3>Почему старые сценарии продаж перестали работать →</h3>
+        <ul>
+          <li>Разбираем допущения о клиенте, которые незаметно мешают вам закрывать сделки</li>
+          <li>Смотрим, где заученные скрипты теряют доверие ещё до начала разговора</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-num">02<span class="clause-date">13 окт 2026</span></div>
+      <div>
+        <h3>Эмпатия как инструмент, а не как мягкость →</h3>
+        <ul>
+          <li>Учитесь снимать внутреннее напряжение собеседника вместо перечисления преимуществ</li>
+          <li>Разбираете, что по-настоящему важно клиенту, чтобы он был готов вам довериться</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-num">03<span class="clause-date">20 окт 2026</span></div>
+      <div>
+        <h3>Честный сбор информации →</h3>
+        <ul>
+          <li>Меняете вопросы, на которые клиенту хочется соврать, на те, что раскрывают правду</li>
+          <li>Создаёте условия, в которых клиент сам делится важными деталями сделки</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-num">04<span class="clause-date">27 окт 2026</span></div>
+      <div>
+        <h3>Работа со скрытыми возражениями →</h3>
+        <ul>
+          <li>Снимаете сомнения клиента до того, как они превратились в открытый отказ</li>
+          <li>Даёте клиенту почувствовать выгоду сделки без реальной скидки с вашей стороны</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-num">05<span class="clause-date">3 ноя 2026</span></div>
+      <div>
+        <h3>Квалификация вместо продажи всем подряд →</h3>
+        <ul>
+          <li>Закрываете больше сделок, отказавшись от попытки продать каждому обратившемуся</li>
+          <li>Экономите время, отсеивая тех, кто использует вас как рычаг для торга в другом месте</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-num">06<span class="clause-date">10 ноя 2026</span></div>
+      <div>
+        <h3>Настоящее согласие клиента →</h3>
+        <ul>
+          <li>Отличаете фиктивное «да» от реального решения о покупке</li>
+          <li>Учитесь отказывать в части условий, не разрушая отношения и не теряя сделку</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-num">07<span class="clause-date">17 ноя 2026</span></div>
+      <div>
+        <h3>Типы личности клиента →</h3>
+        <ul>
+          <li>Подбираете подход под то, как разные типы клиентов принимают решения</li>
+          <li>Используете то, что важно именно этому типу личности, чтобы выстроить доверие</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-num">08<span class="clause-date">24 ноя 2026</span></div>
+      <div>
+        <h3>Проверка обязательств →</h3>
+        <ul>
+          <li>Убеждаетесь, что договорённость не развалится сразу после звонка</li>
+          <li>Отличаете реальное намерение купить от вежливого способа закончить разговор</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-num">09<span class="clause-date">1 дек 2026</span></div>
+      <div>
+        <h3>Возражения как источник информации →</h3>
+        <ul>
+          <li>Используете возражение, чтобы узнать больше, а не чтобы начать спорить</li>
+          <li>Добираетесь до истинной причины сомнений за формальной отговоркой</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-num">10<span class="clause-date">8 дек 2026</span></div>
+      <div>
+        <h3>Подготовка к сложному разговору →</h3>
+        <ul>
+          <li>Продумываете заранее реакцию на вероятные возражения и эмоции клиента</li>
+          <li>Приходите на встречу готовыми, не тратя время на догадки прямо во время разговора</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Вопросы про курс</span>
+      <h2>Что нужно знать перед записью</h2>
+    </div>
+
+    <div class="faq-item">
+      <h3>Сколько будет доступ к материалам курса?</h3>
+      <p>Запись каждой сессии доступна 31 день с момента проведения. Все раздаточные материалы остаются у вас и после завершения курса — используйте их в своих продажах и дальше.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Будет ли сертификат?</h3>
+      <p>Да. По итогам 10-недельного курса каждый участник получает сертификат о прохождении программы.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Помогаете ли вы с трудоустройством после курса?</h3>
+      <p>Лучшим выпускникам курса мы предлагаем возможность трудоустройства у одного из наших партнёров.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Остались вопросы?</h3>
+      <p>Напишите Анастасии в Telegram — ответит лично и поможет понять, подходит ли вам этот поток.</p>
+    </div>
+  </div>
+</section>
+
+<section id="form">
+  <div class="wrap cta-grid">
+    <div class="section-head">
+      <span class="eyebrow">Следующий шаг</span>
+      <h2>Осталось узнать, подходит ли курс именно вам</h2>
+      <p>Напишите в Telegram, коротко расскажите, что и кому вы продаёте — вместе решим, стоит ли идти именно в этот поток.</p>
+    </div>
+    <div class="cta-card">
+      <span class="eyebrow">Как это происходит</span>
+      <ol>
+        <li>Пишете Анастасии в Telegram</li>
+        <li>Коротко рассказываете, что продаёте</li>
+        <li>Получаете место в группе, которая стартует 5 октября</li>
+      </ol>
+      <a class="btn-primary" href="https://t.me/ana_semm" target="_blank" rel="noopener"><span class="seal"></span>Написать Анастасии</a>
+      <p class="cta-price">Стоимость участия — $1500 за весь 10-недельный курс</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>© 2026 SettingCloser</span>
+    <a href="https://t.me/ana_semm" target="_blank" rel="noopener">t.me/ana_semm</a>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="label">
+    <span class="logo-mark"></span>
+    <span class="name">setting<b>closer</b></span>
+    <span class="tagline">10-недельный курс по продажам с Анастасией</span>
+  </div>
+  <a class="btn-primary" href="https://t.me/ana_semm" target="_blank" rel="noopener"><span class="seal"></span>Написать Анастасии</a>
+</div>
+
+</body>
+</html>
